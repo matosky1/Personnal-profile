@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image:  radial-gradient(rgb(203, 199, 232),rgb(0, 0, 0));
+}
+
+header{
+   background-image:  radial-gradient(rgb(200, 194, 243),rgb(0, 0, 0));
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+nav ul{
+    list-style-type: none;
+    padding: 0;
+}
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li{
+    color: #fff;
+    text-decoration: none;
+}
+
+section{
+    padding: 20px;
+    text-align: center;
+}
+
+input[type="text"], button {
+    margin: 10px;
+    padding: 5px;
+}
+
+footer {
+    background-image:  radial-gradient(rgb(200, 194, 243),rgb(0, 0, 0));
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
