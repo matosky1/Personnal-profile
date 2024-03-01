@@ -248,35 +248,119 @@ var dataSet = [
 ];
  
 let div = document.getElementById("container");
-let j = 0;
- 
-//default
-for (let i = 0; i < dataSet.length; i++) {
-    let p = document.createElement("p");
-    j++;  
-    p.setAttribute("class", `p${j}`);
-    div.appendChild(p);
-    p.setAttribute("id", "p");
-    p.innerHTML = dataSet[i];
-// sort by name
-    let sortByName = document.getElementById("sortByName");
-    sortByName.addEventListener("click", () => {
-    dataSet.sort();
-    p.innerHTML = dataSet[i];
+// reset table
+let unsorted = document.getElementById("reset");
+unsorted.addEventListener("click", () => {
+  location.reload();
+  resetSelectBox();
 });
-// sort by salary
-    let sortBySalary = document.getElementById("sortBySalary");
-    sortBySalary.addEventListener("click", () => {
-    dataSet.sort(function (a, b) {
-      let c = a[5].split(",").join("").replace("$", "");
-      let d = b[5].split(",").join("").replace("$", "");
-      return c - d;
-    });
-    p.innerHTML = dataSet[i];
-})
+ 
+let table = document.createElement("table");
+table.setAttribute("id", "myTable");
+var tableBody = document.createElement("TBODY");
+table.appendChild(tableBody);
+var tableHeader = document.createElement("TH");
+var tableHeader2 = document.createElement("TH");
+var tableHeader3 = document.createElement("TH");
+var tableHeader4 = document.createElement("TH");
+var tableHeader5 = document.createElement("TH");
+var tableHeader6 = document.createElement("TH");
+tableHeader.innerHTML = "Name";
+tableHeader2.innerHTML = "Position";
+tableHeader3.innerHTML = "City";
+tableHeader4.innerHTML = "ID";
+tableHeader5.innerHTML = "Start Date";
+tableHeader6.innerHTML = "Salary";
+tableBody.appendChild(tableHeader);
+tableBody.appendChild(tableHeader2);
+tableBody.appendChild(tableHeader3);
+tableBody.appendChild(tableHeader4);
+tableBody.appendChild(tableHeader5);
+tableBody.appendChild(tableHeader6);
+for (let i = 0; i < dataSet.length; i++) {
+  var tableRow = document.createElement("TR");
+  for (let j = 0; j < 6; j++) {
+    var tableColumn0 = document.createElement("TD");
+    tableBody.appendChild(tableRow);
+    tableColumn0.innerHTML = dataSet[i][j];
+    tableRow.appendChild(tableColumn0);
+ 
+    let select = document.getElementById("select");
+    select.onclick = () => {
+      // sort by name
+      if (select.value == "sortByName") {
+        sortTableByName();
+      }
+ 
+      // sort table by salary
+      if (select.value == "sortBySalary") {
+        sortTableBySalary();
+      }
+    };
+  }
 }
-// reset
-    let unsorted = document.getElementById("reset");
-    unsorted.addEventListener("click", ()=>{
-        location.reload();
-    });
+div.appendChild(table);
+ 
+// function to sort table by name
+function sortTableByName() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 0; i < rows.length - 1; i++) {
+      shouldSwitch = false;
+      x = rows[i].getElementsByTagName("TD")[0];
+      y = rows[i + 1].getElementsByTagName("TD")[0];
+      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+ 
+// function to sort table by salary
+function sortTableBySalary() {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById("myTable");
+  switching = true;
+  while (switching) {
+    switching = false;
+    rows = table.rows;
+    for (i = 0; i < rows.length - 1; i++) {
+      x = rows[i].getElementsByTagName("TD")[5];
+      y = rows[i + 1].getElementsByTagName("TD")[5];
+      if (
+        Number(x.innerHTML.split(",").join("").replace("$", "")) >
+        Number(y.innerHTML.split(",").join("").replace("$", ""))
+      ) {
+        shouldSwitch = true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
+}
+ 
+// function to reset select box
+function resetSelectBox() {
+  var select = document.getElementById("select");
+  for (var i = 0; i < select.options.length; i++) {
+    option = select.options[i];
+ 
+    if (option.value == "sortBy") {
+      option.selected = true;
+      return;
+    }
+  }
+}
+ 
